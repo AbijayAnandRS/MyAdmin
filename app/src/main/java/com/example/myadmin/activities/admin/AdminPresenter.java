@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import com.example.myadmin.activities.base.BasePresenter;
 import com.example.myadmin.data.ClientAdapterData;
 import com.example.myadmin.data.ClientData;
+import com.example.myadmin.data.ProductData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,29 @@ public class AdminPresenter extends BasePresenter<AdminContract.View> implements
 
 
   @Override
+  public void getProductData() {
+    view.showProgressbar(true);
+    database.child("product").addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Map<String, Object> dataMap = (Map<String, Object>) dataSnapshot.getValue();
+        if (view != null) {
+          view.showProgressbar(false);
+          view.onProductsFetched(dataMap);
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+        if (view != null) {
+          view.showProgressbar(false);
+          view.showThrowable(new Throwable(databaseError.getMessage()));
+        }
+      }
+    });
+  }
+
+  @Override
   public void getDataFromFireBase() {
     view.showProgressbar(true);
     database.child("newProducts").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -31,14 +55,16 @@ public class AdminPresenter extends BasePresenter<AdminContract.View> implements
         Map<String, Object> dataMap = (Map<String, Object>) dataSnapshot.getValue();
         if (view != null) {
           view.showProgressbar(false);
-          view.onDataFetched(dataMap);
+          view.onNewProductDataFetched(dataMap);
         }
       }
 
       @Override
       public void onCancelled(@NonNull DatabaseError databaseError) {
-        view.showProgressbar(false);
-        view.showThrowable(new Throwable(databaseError.getMessage()));
+        if (view != null) {
+          view.showProgressbar(false);
+          view.showThrowable(new Throwable(databaseError.getMessage()));
+        }
       }
     });
   }

@@ -3,14 +3,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:translationY="-25dp"
   android:layout_height="match_parent"
+  android:translationY="-25dp"
   app:layout_behavior="@string/appbar_scrolling_view_behavior"
   tools:showIn="@layout/activity_products">
   <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-
     >
     <LinearLayout
       android:layout_width="fill_parent"
@@ -20,111 +19,145 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-
-
+        android:orientation="vertical">
         />
+
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_margin="20dp">
-          <EditText
+          android:layout_margin="20dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Products"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:typeface="monospace"
+            />
+
+          <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="CompanyName"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_products">
+
+          </android.support.v7.widget.RecyclerView>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="20dp"
+          android:orientation="vertical">
+          <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Company Details"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:typeface="monospace"
+            />
+          <EditText
+            android:id="@+id/edCompanyName"
+            android:textStyle="normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
-            android:textSize="17dp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            android:id="@+id/edCompanyName"/>
+            android:text="CompanyName"
+            android:textSize="15sp"
+            android:typeface="normal"/>
           <EditText
+            android:id="@+id/edCompanyEmail"
+            android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:textSize="12dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            android:id="@+id/edCompanyEmail"/>
+            android:textSize="15sp"
+            android:typeface="normal"/>
           <EditText
+            android:id="@+id/edCompanyMobile"
+            android:textStyle="normal"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:text="phoneNumber"
-
-            android:textSize="15dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            android:id="@+id/edCompanyMobile"/>
+            android:textSize="15sp"
+            android:typeface="normal"/>
 
           <EditText
+            android:id="@+id/edCompanyWebsite"
+            android:textStyle="normal"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:text="website"
-
             android:textSize="15dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            android:id="@+id/edCompanyWebsite"/>
+            android:typeface="normal"/>
 
           <EditText
+            android:id="@+id/edCompanyContactId"
+            android:textStyle="normal"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:text="website"
-
-            android:textSize="15dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            android:id="@+id/edCompanyContactId"/>
+            android:textSize="15sp"
+            android:typeface="normal"/>
 
           <EditText
+            android:id="@+id/edCompanAddress"
+            android:textStyle="normal"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:text="website"
-
-            android:textSize="15dp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            android:id="@+id/edCompanAddress"/>
+            android:textSize="15sp"
+            android:typeface="normal"/>
 
         </LinearLayout>
       </LinearLayout>
 
 
       <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-
-        android:text="DELETE"
-        android:gravity="center"
         android:id="@+id/b1"
-        android:background="@drawable/bay"
-        android:textColor="#FFF"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bay"
+        android:gravity="center"
+        android:text="DELETE"
+        android:textColor="#FFF"
         />
       <Button
+        android:id="@+id/b2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/b2"
-        android:text="UPDATE"
-        android:textColor="#FFF"
-        android:gravity="center"
-        android:background="@drawable/bay"
-        android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bay"
+        android:gravity="center"
+        android:text="UPDATE"
+        android:textColor="#FFF"
 
         />
     </LinearLayout>
   </ScrollView>
-
 
 
 </android.support.v4.widget.NestedScrollView>

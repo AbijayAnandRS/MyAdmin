@@ -8,12 +8,16 @@ public class AdminContract {
 
   interface View extends MvpView {
 
-    void onDataFetched(Map<String, Object> dataMap);
+    void onNewProductDataFetched(Map<String, Object> dataMap);
 
     void onClientDataFetched(ClientAdapterData clientAdapterData);
+
+    void onProductsFetched(Map<String, Object> dataMap);
   }
 
   interface Presenter {
+
+    void getProductData();
 
     void getDataFromFireBase();
 

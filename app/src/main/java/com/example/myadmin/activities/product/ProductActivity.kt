@@ -3,16 +3,19 @@ package com.example.myadmin.activities.product
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import com.example.myadmin.R
 import com.example.myadmin.activities.base.BaseActivity
+import com.example.myadmin.adapters.ProductRecyclerAdapter
 import com.example.myadmin.data.ClientAdapterData
 import com.example.myadmin.data.ClientData
+import com.example.myadmin.data.ProductData
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.list_products.*
 
 class ProductActivity : BaseActivity() {
 
@@ -30,6 +33,16 @@ class ProductActivity : BaseActivity() {
         val ivCompanyLogo = findViewById<ImageView>(R.id.companyImage)
         Picasso.with(this).load(clientData!!.companyLogoUrl)
                 .into(ivCompanyLogo)
+        val productMap = clientAdapterData?.productMap
+        if (productMap != null) {
+            var productList = ArrayList<ProductData>()
+            productMap?.entries?.forEach { entry ->
+                productList.add(Gson().fromJson(Gson().toJson(entry.value), ProductData::class.java))
+
+            }
+            rv_products.layoutManager = GridLayoutManager(this, 3)
+            rv_products.adapter = ProductRecyclerAdapter(this, productList)
+        }
         fillEditTexts()
     }
 

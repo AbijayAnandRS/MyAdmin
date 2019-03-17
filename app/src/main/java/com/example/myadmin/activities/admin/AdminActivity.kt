@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -15,6 +14,8 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 import com.example.myadmin.R
 import com.example.myadmin.activities.base.BaseActivity
@@ -22,6 +23,7 @@ import com.example.myadmin.activities.product.ProductActivity
 import com.example.myadmin.adapters.AdminRecyclerAdapter
 import com.example.myadmin.adapters.SectionsPagerAdapter
 import com.example.myadmin.data.ClientAdapterData
+import kotlinx.android.synthetic.main.content_main_new.*
 
 
 class AdminActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, AdminContract.View {
@@ -45,21 +47,23 @@ class AdminActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         toggle.syncState()
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager,
-                arrayOf(rootView, rootView),
-                arrayOf("COMPANIES", "NEW COMPANIES"))
-        mViewPager = findViewById(R.id.container1)
-        mViewPager?.adapter = mSectionsPagerAdapter
         val tabLayout = findViewById<TabLayout>(R.id.tabs1)
-        tabLayout.setupWithViewPager(mViewPager)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        rootView = inflater.inflate(R.layout.content_main, null)
-        val recyclerView = rootView?.findViewById<RecyclerView>(R.id.rvCompanies)
-        recyclerView!!.layoutManager = LinearLayoutManager(rootView?.context)
+        val rootView1 = inflater.inflate(R.layout.content_main, null)
+        val rootView2 = inflater.inflate(R.layout.content_main_new, null)
+        val lvProducts = rootView2.findViewById<ListView>(R.id.lvProducts)
+        val recyclerView = rootView1?.findViewById<RecyclerView>(R.id.rvCompanies)
+        recyclerView!!.layoutManager = LinearLayoutManager(rootView1?.context)
         adapter = AdminRecyclerAdapter(this)
         recyclerView.adapter = adapter
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager,
+                arrayOf(rootView2, rootView1),
+                arrayOf("PRODUCTS", "NEW COMPANIES"))
+        mViewPager = findViewById(R.id.container1)
+        mViewPager?.adapter = mSectionsPagerAdapter
+        tabLayout.setupWithViewPager(mViewPager)
         presenter.attachView(this)
-        presenter.getDataFromFireBase()
+        presenter.getProductData()
     }
 
     override fun onBackPressed() {
@@ -113,24 +117,29 @@ class AdminActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         return true
     }
 
-    override fun onDataFetched(dataMap: Map<String, Any>) {
-        for (entry in dataMap.entries) {
+    override fun onClientDataFetched(clientAdapterData: ClientAdapterData) {
+        adapter?.addItem(clientAdapterData)
+    }
+
+    override fun onNewProductDataFetched(dataMap: MutableMap<String, Any>?) {
+        for (entry in dataMap!!.entries) {
             presenter.getClientDetails(entry)
         }
     }
 
-    override fun onClientDataFetched(clientAdapterData: ClientAdapterData) {
-        adapter?.addItem(clientAdapterData)
+    override fun onProductsFetched(dataMap: MutableMap<String, Any>?) {
+        var productList = ArrayList<String>()
+        dataMap?.entries?.forEach { entry ->
+            productList.add(entry.key)
+        }
+        var productAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, productList)
+        lvProducts.adapter = productAdapter
+        presenter.getDataFromFireBase()
     }
 
     fun launchProductActivity(clientAdapterData: ClientAdapterData) {
         val intent = ProductActivity.createIntent(this, clientAdapterData)
         startActivity(intent)
-    }
-
-    companion object {
-
-        var rootView: View? = null
     }
 }
 
