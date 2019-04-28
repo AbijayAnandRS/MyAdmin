@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
-            android:text="CompanyName"
+            android:hint="CompanyName"
             android:textSize="15sp"
             android:typeface="normal"/>
           <EditText
@@ -81,7 +81,7 @@
             android:textStyle="normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:hint="Email"
             android:textSize="15sp"
             android:typeface="normal"/>
           <EditText
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:text="phoneNumber"
+            android:hint="phoneNumber"
             android:textSize="15sp"
             android:typeface="normal"/>
 
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:text="website"
+            android:hint="website"
             android:textSize="15dp"
             android:typeface="normal"/>
 
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:text="website"
+            android:hint="contact Id"
             android:textSize="15sp"
             android:typeface="normal"/>
 
@@ -120,16 +120,26 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:text="website"
+            android:hint="Address"
             android:textSize="15sp"
             android:typeface="normal"/>
+
+          <EditText
+              android:id="@+id/edCompanyUrl"
+              android:textStyle="normal"
+              android:layout_width="match_parent"
+
+              android:layout_height="wrap_content"
+              android:hint="CompanyImageUrl"
+              android:textSize="15sp"
+              android:typeface="normal"/>
 
         </LinearLayout>
       </LinearLayout>
 
 
       <Button
-        android:id="@+id/b1"
+        android:id="@+id/bt_delete"
         android:layout_width="match_parent"
 
         android:layout_height="40dp"
@@ -143,7 +153,7 @@
         android:textColor="#FFF"
         />
       <Button
-        android:id="@+id/b2"
+        android:id="@+id/bt_update"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"

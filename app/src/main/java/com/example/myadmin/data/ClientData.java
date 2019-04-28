@@ -1,13 +1,10 @@
 package com.example.myadmin.data;
 
 
-import lombok.Data;
-
-@Data
 public class ClientData {
     
-    public final String companyName;
-    public final String companyEmail;
+    public String companyName;
+    public String companyEmail;
     public String password;
     public String companyWebsite;
     public String country;

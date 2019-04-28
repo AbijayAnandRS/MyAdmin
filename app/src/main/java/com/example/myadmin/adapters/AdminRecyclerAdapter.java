@@ -45,10 +45,10 @@ public class AdminRecyclerAdapter extends RecyclerView.Adapter<AdminRecyclerAdap
 
     if (clientAdapterData != null && clientAdapterData.getClientData() != null) {
       ClientData clientData = clientAdapterData.getClientData();
-      holder.tvCompanyName.setText(clientData.getCompanyName());
-      holder.tvCompanyEmail.setText(clientData.getCompanyEmail());
-      holder.tvMobileNumber.setText(clientData.getCompanyPhone());
-      Picasso.with(activity).load(clientData.getCompanyLogoUrl())
+      holder.tvCompanyName.setText(clientData.companyName);
+      holder.tvCompanyEmail.setText(clientData.companyEmail);
+      holder.tvMobileNumber.setText(clientData.companyPhone);
+      Picasso.with(activity).load(clientData.companyLogoUrl)
           .into(holder.ivCOmpanyLogo);
 
       holder.itemView.setOnClickListener(new OnClickListener() {

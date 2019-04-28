@@ -8,18 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.myadmin.R;
-import com.example.myadmin.activities.product.ProductActivity;
+import com.example.myadmin.activities.base.BaseActivity;
+import com.example.myadmin.activities.product.ClientActivity;
 import com.example.myadmin.data.ProductData;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.myadmin.utils.FunctionUtils.isNotEmpty;
 
 public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.ViewHolder> {
 
-  private List<ProductData> productDataList;
-  private final ProductActivity activity;
+  private List<ProductData> productDataList = new ArrayList();
+  private BaseActivity activity;
 
-  public ProductRecyclerAdapter(ProductActivity activity, List<ProductData> productDataList) {
-    this.productDataList = productDataList;
+  public ProductRecyclerAdapter(BaseActivity activity) {
     this.activity = activity;
   }
 
@@ -34,12 +38,25 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    ProductData productData = productDataList.get(position);
+    final ProductData productData = productDataList.get(position);
     if (productData != null) {
-      holder.tvProductName.setText(productData.getProductName());
-      Picasso.with(activity).load(productData.getProductImage())
-          .into(holder.ivProductImage);
+      holder.tvProductName.setText(productData.productName);
+      if(isNotEmpty(productData.imageUrl)) {
+        Picasso.with(activity).load(productData.imageUrl)
+                .into(holder.ivProductImage);
+      }
+      holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          ((ClientActivity)activity).launchProductDetails(productData);
+        }
+      });
     }
+  }
+
+  public void updateProduct(List<ProductData> productDataList){
+    this.productDataList = productDataList;
+    notifyDataSetChanged();
   }
 
   @Override

@@ -47,6 +47,29 @@ public class AdminPresenter extends BasePresenter<AdminContract.View> implements
   }
 
   @Override
+  public void getMessageData() {
+    view.showProgressbar(true);
+    database.child("showcase").addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Map<String, Object> dataMap = (Map<String, Object>) dataSnapshot.getValue();
+        if (view != null) {
+          view.showProgressbar(false);
+          view.onMesssageDataFetched(dataMap);
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+        if (view != null) {
+          view.showProgressbar(false);
+          view.showThrowable(new Throwable(databaseError.getMessage()));
+        }
+      }
+    });
+  }
+
+  @Override
   public void getDataFromFireBase() {
     view.showProgressbar(true);
     database.child("newProducts").addListenerForSingleValueEvent(new ValueEventListener() {
